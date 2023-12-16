@@ -52,11 +52,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserControl1.cs">
+    <Compile Include="..\..\..\..\objektno proba\UserControl1.cs">
       <SubType>UserControl</SubType>
+      <Link>UserControl1.cs</Link>
     </Compile>
-    <Compile Include="UserControl1.Designer.cs">
+    <Compile Include="..\..\..\..\objektno proba\UserControl1.Designer.cs">
       <DependentUpon>UserControl1.cs</DependentUpon>
+      <Link>UserControl1.Designer.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
@@ -71,8 +73,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControl1.resx">
+    <EmbeddedResource Include="..\..\..\..\objektno proba\UserControl1.resx">
       <DependentUpon>UserControl1.cs</DependentUpon>
+      <Link>UserControl1.resx</Link>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
