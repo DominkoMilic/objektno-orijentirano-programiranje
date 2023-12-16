@@ -79,7 +79,7 @@ namespace WindowsFormsControlLibrary1
         private void inicijalizacija_botuna_X()
         {
             botuni_X = new Button[broj_botuna];
-            int br_X = 1;
+            int br_X = 0;
             for (int i = 0; i < broj_botuna; i++)
             {
                 botuni_X[i] = new Button();
@@ -126,7 +126,7 @@ namespace WindowsFormsControlLibrary1
             for (int i = 0; i < broj_labela; i++)
             {
                 labele[i] = new Label();
-                labele[i].Text = "X" + (i + 1);
+                labele[i].Text = "X" + i;
                 labele[i].Location = new System.Drawing.Point(0, (i + 1) * 20 + i * 50);
                 labele[i].Visible = false;
                 labele[i].Font = new System.Drawing.Font(labele[i].Font.FontFamily, 10, System.Drawing.FontStyle.Bold);
@@ -291,16 +291,29 @@ namespace WindowsFormsControlLibrary1
         private void InitializeContextMenu()
         {
             contextMenu = new ContextMenuStrip();
-            ToolStripMenuItem hideItem = new ToolStripMenuItem("Remove");
-            hideItem.Click += HideItem_Click;
-            contextMenu.Items.Add(hideItem);
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Remove");
+            deleteItem.Click += DeleteItem_Click;
+            contextMenu.Items.Add(deleteItem);
 
             this.ContextMenuStrip = contextMenu;
         }
 
-        private void HideItem_Click(object sender, EventArgs e)
+        private void DeleteItem_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
+            // Cast the sender to ToolStripMenuItem
+            ToolStripMenuItem clickedItem = sender as ToolStripMenuItem;
+
+            // Get the parent context menu strip
+            ContextMenuStrip parentMenu = clickedItem.Owner as ContextMenuStrip;
+
+            // Get the owner control (DraggableLabel)
+            DraggableLabel labelToRemove = parentMenu.SourceControl as DraggableLabel;
+
+            // Remove the label from its parent
+            if (labelToRemove != null)
+            {
+                labelToRemove.Parent.Controls.Remove(labelToRemove);
+            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
