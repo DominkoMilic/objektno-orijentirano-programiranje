@@ -36,11 +36,11 @@
             this.broj_ni_vrata = new System.Windows.Forms.Label();
             this.inkrement_ni = new System.Windows.Forms.Button();
             this.inkrement_nili = new System.Windows.Forms.Button();
-            this.svijetlo_X1 = new System.Windows.Forms.Label();
-            this.svijetlo_X5 = new System.Windows.Forms.Label();
+            this.svijetlo_X0 = new System.Windows.Forms.Label();
             this.svijetlo_X4 = new System.Windows.Forms.Label();
             this.svijetlo_X3 = new System.Windows.Forms.Label();
             this.svijetlo_X2 = new System.Windows.Forms.Label();
+            this.svijetlo_X1 = new System.Windows.Forms.Label();
             this.izbornik = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.izlaz = new System.Windows.Forms.Label();
@@ -138,36 +138,25 @@
             this.inkrement_nili.UseVisualStyleBackColor = false;
             this.inkrement_nili.Click += new System.EventHandler(this.inkrement_nili_Click);
             // 
-            // svijetlo_X1
+            // svijetlo_X0
             // 
-            this.svijetlo_X1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.svijetlo_X1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X1.Location = new System.Drawing.Point(470, 375);
-            this.svijetlo_X1.Name = "svijetlo_X1";
-            this.svijetlo_X1.Size = new System.Drawing.Size(25, 25);
-            this.svijetlo_X1.TabIndex = 30;
-            this.svijetlo_X1.Text = "X1";
-            this.svijetlo_X1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // svijetlo_X5
-            // 
-            this.svijetlo_X5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.svijetlo_X5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X5.Location = new System.Drawing.Point(590, 375);
-            this.svijetlo_X5.Name = "svijetlo_X5";
-            this.svijetlo_X5.Size = new System.Drawing.Size(25, 25);
-            this.svijetlo_X5.TabIndex = 31;
-            this.svijetlo_X5.Text = "X5";
-            this.svijetlo_X5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.svijetlo_X0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.svijetlo_X0.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.svijetlo_X0.Location = new System.Drawing.Point(470, 375);
+            this.svijetlo_X0.Name = "svijetlo_X0";
+            this.svijetlo_X0.Size = new System.Drawing.Size(25, 25);
+            this.svijetlo_X0.TabIndex = 30;
+            this.svijetlo_X0.Text = "X0";
+            this.svijetlo_X0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // svijetlo_X4
             // 
             this.svijetlo_X4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.svijetlo_X4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X4.Location = new System.Drawing.Point(560, 375);
+            this.svijetlo_X4.Location = new System.Drawing.Point(590, 375);
             this.svijetlo_X4.Name = "svijetlo_X4";
             this.svijetlo_X4.Size = new System.Drawing.Size(25, 25);
-            this.svijetlo_X4.TabIndex = 32;
+            this.svijetlo_X4.TabIndex = 31;
             this.svijetlo_X4.Text = "X4";
             this.svijetlo_X4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -175,10 +164,10 @@
             // 
             this.svijetlo_X3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.svijetlo_X3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X3.Location = new System.Drawing.Point(530, 375);
+            this.svijetlo_X3.Location = new System.Drawing.Point(560, 375);
             this.svijetlo_X3.Name = "svijetlo_X3";
             this.svijetlo_X3.Size = new System.Drawing.Size(25, 25);
-            this.svijetlo_X3.TabIndex = 33;
+            this.svijetlo_X3.TabIndex = 32;
             this.svijetlo_X3.Text = "X3";
             this.svijetlo_X3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -186,12 +175,23 @@
             // 
             this.svijetlo_X2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.svijetlo_X2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X2.Location = new System.Drawing.Point(500, 375);
+            this.svijetlo_X2.Location = new System.Drawing.Point(530, 375);
             this.svijetlo_X2.Name = "svijetlo_X2";
             this.svijetlo_X2.Size = new System.Drawing.Size(25, 25);
-            this.svijetlo_X2.TabIndex = 34;
+            this.svijetlo_X2.TabIndex = 33;
             this.svijetlo_X2.Text = "X2";
             this.svijetlo_X2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // svijetlo_X1
+            // 
+            this.svijetlo_X1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.svijetlo_X1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.svijetlo_X1.Location = new System.Drawing.Point(500, 375);
+            this.svijetlo_X1.Name = "svijetlo_X1";
+            this.svijetlo_X1.Size = new System.Drawing.Size(25, 25);
+            this.svijetlo_X1.TabIndex = 34;
+            this.svijetlo_X1.Text = "X1";
+            this.svijetlo_X1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // izbornik
             // 
@@ -251,11 +251,11 @@
             this.Controls.Add(this.circularLabel1);
             this.Controls.Add(this.izlaz);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.svijetlo_X1);
             this.Controls.Add(this.svijetlo_X2);
             this.Controls.Add(this.svijetlo_X3);
             this.Controls.Add(this.svijetlo_X4);
-            this.Controls.Add(this.svijetlo_X5);
-            this.Controls.Add(this.svijetlo_X1);
+            this.Controls.Add(this.svijetlo_X0);
             this.Controls.Add(this.inkrement_nili);
             this.Controls.Add(this.inkrement_ni);
             this.Controls.Add(this.broj_ni_vrata);
@@ -282,11 +282,11 @@
         private System.Windows.Forms.Label broj_ni_vrata;
         private System.Windows.Forms.Button inkrement_ni;
         private System.Windows.Forms.Button inkrement_nili;
-        private System.Windows.Forms.Label svijetlo_X1;
-        private System.Windows.Forms.Label svijetlo_X5;
+        private System.Windows.Forms.Label svijetlo_X0;
         private System.Windows.Forms.Label svijetlo_X4;
         private System.Windows.Forms.Label svijetlo_X3;
         private System.Windows.Forms.Label svijetlo_X2;
+        private System.Windows.Forms.Label svijetlo_X1;
         private System.Windows.Forms.Label izbornik;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label izlaz;
