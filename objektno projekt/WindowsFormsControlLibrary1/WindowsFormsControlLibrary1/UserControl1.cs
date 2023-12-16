@@ -24,11 +24,13 @@ namespace WindowsFormsControlLibrary1
         private Button[] botuni_X;
         private Button[] botuni_ON;
         private CircularLabel[] lights;
-        int broj_svijetala = 5;
+        int number_of_lights = 5;
         int trenutni_br = 1;
         int trenutni_br_nili = 0;
         int trenutni_br_ni = 0;
         private Point offset;
+        private int cp_counter = 0;
+        
 
         public UserControl1()
         {
@@ -44,7 +46,7 @@ namespace WindowsFormsControlLibrary1
             inicijalizacija_botuna_ON();
             postavljanje_NOR();
             postavljanje_NAND();
-            labela_svijetlo(broj_svijetala);
+            labela_svijetlo(number_of_lights);
             for (int i = 0; i < 5; i++)
             {
                 botuni_ON[i].Click += botuni_ON_click;
@@ -68,7 +70,7 @@ namespace WindowsFormsControlLibrary1
             for (int i = 0; i < number_of_lights; i++)
             {
                 lights[i] = new CircularLabel();
-                lights[i].Location = new Point(478 + i * 30, 405);
+                lights[i].Location = new Point(598 - i * 30, 405);
                 lights[i].BringToFront();
                 lights[i].BackColor = Color.Red;
                 this.Controls.Add(lights[i]);
@@ -110,7 +112,7 @@ namespace WindowsFormsControlLibrary1
             for (int i = 0; i < 5; i++)
             {
                 botuni_ON[i] = new Button();
-                botuni_ON[i].Location = new System.Drawing.Point(470 + i * 30, 420);
+                botuni_ON[i].Location = new System.Drawing.Point(590 - i * 30, 420);
                 botuni_ON[i].Visible = true;
                 botuni_ON[i].Font = new System.Drawing.Font(botuni_ON[i].Font.FontFamily, 8, System.Drawing.FontStyle.Bold);
                 botuni_ON[i].Size = new Size(25, 20);
@@ -202,14 +204,20 @@ namespace WindowsFormsControlLibrary1
         {
             Button clickedButton = (Button)sender;
             int i = Array.IndexOf(botuni_ON, clickedButton);
+            
+            if (lights[i].BackColor == Color.Green)
+                lights[i].BackColor = Color.Red;
+            else if (lights[i].BackColor == Color.Red)
+                lights[i].BackColor = Color.Green;
 
-            if (i >= 0 && i < lights.Length)
+            string binary = "00000";
+            for(int j = 0; j < number_of_lights; j++)
             {
-                if (lights[i].BackColor == Color.Green)
-                    lights[i].BackColor = Color.Red;
-                else if (lights[i].BackColor == Color.Red)
-                    lights[i].BackColor = Color.Green;
+                if (lights[j].BackColor == Color.Green)
+                    binary = binary.Substring(0, j) + '1' + binary.Substring(j + 1);
             }
+
+            cp_counter = Convert.ToInt32(binary, 2);
         }
 
         private void inkrement_Click(object sender, EventArgs e)
@@ -253,6 +261,7 @@ namespace WindowsFormsControlLibrary1
             nand[trenutni_br_ni - 1].Visible = true;
         }
 
+
         private void LabelMouseDown(object sender, MouseEventArgs e)
         {
             Label selectedLabel = (Label)sender;
@@ -275,6 +284,29 @@ namespace WindowsFormsControlLibrary1
                 selectedLabel.Location = new Point(newX, newY);
             }
         }
+
+        private void reset_lights_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < number_of_lights; i++)
+                lights[i].BackColor = Color.Red;
+            cp_counter = 0;
+        }
+
+        private void counting_point_Click(object sender, EventArgs e)
+        {
+            cp_counter++;
+            string binaryi = Convert.ToString(cp_counter, 2);
+            binaryi = binaryi.PadLeft(5, '0');
+            for (int i = 0; i < number_of_lights; i++)
+            {
+                if (binaryi[binaryi.Length-i-1] == '1')
+                    lights[i].BackColor = Color.Green;
+                else
+                    lights[i].BackColor = Color.Red;
+            }
+            if (cp_counter == 32)
+                cp_counter = 0;
+        }    
 
     }
 
@@ -338,6 +370,8 @@ namespace WindowsFormsControlLibrary1
                 Location = new Point(newX, newY);
             }
         }
+
+
     }
 
     public class CircularLabel : Label

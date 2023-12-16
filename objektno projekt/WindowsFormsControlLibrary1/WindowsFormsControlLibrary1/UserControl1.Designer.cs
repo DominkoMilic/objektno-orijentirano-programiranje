@@ -44,10 +44,10 @@
             this.izbornik = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.izlaz = new System.Windows.Forms.Label();
+            this.reset_lights = new System.Windows.Forms.Button();
+            this.counting_point = new System.Windows.Forms.Button();
             this.izlaz_svijetlo = new WindowsFormsControlLibrary1.CircularLabel();
             this.circularLabel1 = new WindowsFormsControlLibrary1.CircularLabel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // broj_varijabli
@@ -103,7 +103,7 @@
             this.broj_nili_vrata.Name = "broj_nili_vrata";
             this.broj_nili_vrata.Size = new System.Drawing.Size(126, 15);
             this.broj_nili_vrata.TabIndex = 21;
-            this.broj_nili_vrata.Text = "BROJ NILI VRATA";
+            this.broj_nili_vrata.Text = "DODAJ NILI VRATA";
             this.broj_nili_vrata.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // broj_ni_vrata
@@ -113,7 +113,7 @@
             this.broj_ni_vrata.Name = "broj_ni_vrata";
             this.broj_ni_vrata.Size = new System.Drawing.Size(126, 15);
             this.broj_ni_vrata.TabIndex = 22;
-            this.broj_ni_vrata.Text = "BROJ NI VRATA";
+            this.broj_ni_vrata.Text = "DODAJ NI VRATA";
             this.broj_ni_vrata.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // inkrement_ni
@@ -144,7 +144,7 @@
             // 
             this.svijetlo_X0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.svijetlo_X0.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X0.Location = new System.Drawing.Point(470, 375);
+            this.svijetlo_X0.Location = new System.Drawing.Point(590, 375);
             this.svijetlo_X0.Name = "svijetlo_X0";
             this.svijetlo_X0.Size = new System.Drawing.Size(25, 25);
             this.svijetlo_X0.TabIndex = 30;
@@ -155,7 +155,7 @@
             // 
             this.svijetlo_X4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.svijetlo_X4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X4.Location = new System.Drawing.Point(590, 375);
+            this.svijetlo_X4.Location = new System.Drawing.Point(470, 375);
             this.svijetlo_X4.Name = "svijetlo_X4";
             this.svijetlo_X4.Size = new System.Drawing.Size(25, 25);
             this.svijetlo_X4.TabIndex = 31;
@@ -166,7 +166,7 @@
             // 
             this.svijetlo_X3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.svijetlo_X3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X3.Location = new System.Drawing.Point(560, 375);
+            this.svijetlo_X3.Location = new System.Drawing.Point(500, 375);
             this.svijetlo_X3.Name = "svijetlo_X3";
             this.svijetlo_X3.Size = new System.Drawing.Size(25, 25);
             this.svijetlo_X3.TabIndex = 32;
@@ -188,7 +188,7 @@
             // 
             this.svijetlo_X1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.svijetlo_X1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.svijetlo_X1.Location = new System.Drawing.Point(500, 375);
+            this.svijetlo_X1.Location = new System.Drawing.Point(560, 375);
             this.svijetlo_X1.Name = "svijetlo_X1";
             this.svijetlo_X1.Size = new System.Drawing.Size(25, 25);
             this.svijetlo_X1.TabIndex = 34;
@@ -225,6 +225,28 @@
             this.izlaz.Text = "Y";
             this.izlaz.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // reset_lights
+            // 
+            this.reset_lights.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reset_lights.Location = new System.Drawing.Point(650, 412);
+            this.reset_lights.Name = "reset_lights";
+            this.reset_lights.Size = new System.Drawing.Size(35, 35);
+            this.reset_lights.TabIndex = 39;
+            this.reset_lights.Text = "R";
+            this.reset_lights.UseVisualStyleBackColor = true;
+            this.reset_lights.Click += new System.EventHandler(this.reset_lights_Click);
+            // 
+            // counting_point
+            // 
+            this.counting_point.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.counting_point.Location = new System.Drawing.Point(650, 373);
+            this.counting_point.Name = "counting_point";
+            this.counting_point.Size = new System.Drawing.Size(35, 35);
+            this.counting_point.TabIndex = 40;
+            this.counting_point.Text = "CP";
+            this.counting_point.UseVisualStyleBackColor = true;
+            this.counting_point.Click += new System.EventHandler(this.counting_point_Click);
+            // 
             // izlaz_svijetlo
             // 
             this.izlaz_svijetlo.AutoSize = true;
@@ -244,31 +266,13 @@
             this.circularLabel1.Size = new System.Drawing.Size(0, 13);
             this.circularLabel1.TabIndex = 37;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(168, 108);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(34, 35);
-            this.button1.TabIndex = 39;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(208, 108);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(35, 35);
-            this.button2.TabIndex = 40;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.counting_point);
+            this.Controls.Add(this.reset_lights);
             this.Controls.Add(this.izlaz_svijetlo);
             this.Controls.Add(this.circularLabel1);
             this.Controls.Add(this.izlaz);
@@ -314,7 +318,7 @@
         private System.Windows.Forms.Label izlaz;
         private CircularLabel circularLabel1;
         private CircularLabel izlaz_svijetlo;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button reset_lights;
+        private System.Windows.Forms.Button counting_point;
     }
 }
