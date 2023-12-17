@@ -46,6 +46,7 @@
             this.izlaz = new System.Windows.Forms.Label();
             this.reset_lights = new System.Windows.Forms.Button();
             this.counting_point = new System.Windows.Forms.Button();
+            this.add_cabel = new System.Windows.Forms.Button();
             this.izlaz_svijetlo = new WindowsFormsControlLibrary1.CircularLabel();
             this.circularLabel1 = new WindowsFormsControlLibrary1.CircularLabel();
             this.SuspendLayout();
@@ -247,6 +248,16 @@
             this.counting_point.UseVisualStyleBackColor = true;
             this.counting_point.Click += new System.EventHandler(this.counting_point_Click);
             // 
+            // add_cabel
+            // 
+            this.add_cabel.Location = new System.Drawing.Point(340, 380);
+            this.add_cabel.Name = "add_cabel";
+            this.add_cabel.Size = new System.Drawing.Size(90, 25);
+            this.add_cabel.TabIndex = 41;
+            this.add_cabel.Text = "DODAJ KABEL";
+            this.add_cabel.UseVisualStyleBackColor = true;
+            this.add_cabel.Click += new System.EventHandler(this.add_cabel_Click);
+            // 
             // izlaz_svijetlo
             // 
             this.izlaz_svijetlo.AutoSize = true;
@@ -271,6 +282,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Controls.Add(this.add_cabel);
             this.Controls.Add(this.counting_point);
             this.Controls.Add(this.reset_lights);
             this.Controls.Add(this.izlaz_svijetlo);
@@ -320,5 +332,6 @@
         private CircularLabel izlaz_svijetlo;
         private System.Windows.Forms.Button reset_lights;
         private System.Windows.Forms.Button counting_point;
+        private System.Windows.Forms.Button add_cabel;
     }
 }

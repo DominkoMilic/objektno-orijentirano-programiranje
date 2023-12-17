@@ -23,23 +23,38 @@ namespace WindowsFormsControlLibrary1
         private DraggableLabel[] nand;
         private Button[] botuni_X;
         private Button[] botuni_ON;
+        private Button[] botuni_boja;
         private CircularLabel[] lights;
+        Color[] colors = new Color[5];
         int number_of_lights = 5;
         int trenutni_br = 1;
         int trenutni_br_nili = 0;
         int trenutni_br_ni = 0;
         private Point offset;
         private int cp_counter = 0;
-        
+        private bool isDrawing = false;
+        private List<List<Point>> allLines = new List<List<Point>>();
+        private List<Point> currentLine = new List<Point>();
+        private Pen linePen = new Pen(Color.Black, 3);
+        private List<Color> lineColors = new List<Color>();
+
 
         public UserControl1()
         {
             InitializeComponent();
+            this.MouseDown += MainForm_MouseDown;
+            this.MouseMove += MainForm_MouseMove;
+            this.MouseUp += MainForm_MouseUp;
+            this.Paint += MainForm_Paint;
+            colors[0] = Color.Black;
+            colors[1] = Color.Red;
+            colors[2] = Color.Blue;
+            colors[3] = Color.Yellow;
+            colors[4] = Color.Purple;
         }
 
         private void UserControl1_Load(object sender, EventArgs e)
-        {
-
+        { 
             broj_varijabli.Text = trenutni_br.ToString();
             inicijalizacija_labela();
             inicijalizacija_botuna_X();
@@ -47,6 +62,7 @@ namespace WindowsFormsControlLibrary1
             postavljanje_NOR();
             postavljanje_NAND();
             labela_svijetlo(number_of_lights);
+            inicijalizacija_botuna_boja();
             for (int i = 0; i < 5; i++)
             {
                 botuni_ON[i].Click += botuni_ON_click;
@@ -119,6 +135,22 @@ namespace WindowsFormsControlLibrary1
                 botuni_ON[i].TextAlign = ContentAlignment.MiddleCenter;
                 this.Controls.Add(botuni_ON[i]);
                 this.Controls.SetChildIndex(botuni_ON[i], 0);
+            }
+        }
+
+        private void inicijalizacija_botuna_boja()
+        {
+            botuni_boja = new Button[5];
+            for (int i = 0; i < 5; i++)
+            {
+                botuni_boja[i] = new Button();
+                botuni_boja[i].Location = new System.Drawing.Point(340 + 18 * i, 410);
+                botuni_boja[i].Visible = true;
+                botuni_boja[i].Size = new Size(18, 30);
+                botuni_boja[i].BackColor = colors[i];
+                botuni_boja[i].Click += BotuniBoja_Click;
+                this.Controls.Add(botuni_boja[i]);
+                this.Controls.SetChildIndex(botuni_boja[i], 0);
             }
         }
 
@@ -214,7 +246,7 @@ namespace WindowsFormsControlLibrary1
             for(int j = 0; j < number_of_lights; j++)
             {
                 if (lights[j].BackColor == Color.Green)
-                    binary = binary.Substring(0, j) + '1' + binary.Substring(j + 1);
+                    binary = binary.Substring(0, number_of_lights - 1 - j) + '1' + binary.Substring(number_of_lights - j);
             }
 
             cp_counter = Convert.ToInt32(binary, 2);
@@ -261,6 +293,13 @@ namespace WindowsFormsControlLibrary1
             nand[trenutni_br_ni - 1].Visible = true;
         }
 
+        private void BotuniBoja_Click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            Color selectedColor = clickedButton.BackColor;
+            linePen.Color = selectedColor;
+        }
+
 
         private void LabelMouseDown(object sender, MouseEventArgs e)
         {
@@ -269,7 +308,6 @@ namespace WindowsFormsControlLibrary1
             selectedLabel.BringToFront();
         }
 
-        private Rectangle draggableArea = new Rectangle(50, 50, 450, 370);
 
         private void LabelMouseMove(object sender, MouseEventArgs e)
         {
@@ -306,7 +344,170 @@ namespace WindowsFormsControlLibrary1
             }
             if (cp_counter == 32)
                 cp_counter = 0;
-        }    
+        }
+
+        private void add_cabel_Click(object sender, EventArgs e)
+        {
+            isDrawing = true;
+            currentLine.Clear();
+            linePen.Color = GetNextLineColor();
+        }
+
+        private Color GetNextLineColor()
+        {
+            // If there are existing lines, return the color of the last line
+            if (lineColors.Count > 0)
+            {
+                return lineColors.Last();
+            }
+            else
+            {
+                // Return the default color if no lines have been drawn yet
+                return linePen.Color;
+            }
+        }
+
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                // Check if right-click occurred on a line
+                CheckDeleteLine(e.Location);
+            }
+            else if (isDrawing && e.Button == MouseButtons.Left)
+            {
+                currentLine.Add(e.Location);
+            }
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Continue drawing while the left mouse button is held down.
+            if (isDrawing && e.Button == MouseButtons.Left)
+            {
+                currentLine.Add(e.Location);
+                this.Invalidate(); // Force the form to redraw.
+            }
+        }
+
+        private void MainForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isDrawing && e.Button == MouseButtons.Left)
+            {
+                isDrawing = false;
+                // Save the current line to the list of all lines.
+                allLines.Add(new List<Point>(currentLine));
+                // Save the color of the current line to the list of line colors.
+                lineColors.Add(linePen.Color);
+                currentLine.Clear();
+            }
+        }
+
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+            for (int i = 0; i < allLines.Count; i++)
+            {
+                if (allLines[i].Count > 1)
+                {
+                    // Use the corresponding color from lineColors
+                    using (Pen currentLinePen = new Pen(lineColors[i], 3))
+                    {
+                        e.Graphics.DrawLines(currentLinePen, allLines[i].ToArray());
+                    }
+                }
+            }
+
+            // Draw the current line as well.
+            if (currentLine.Count > 1)
+            {
+                // Use the current color from linePen
+                e.Graphics.DrawLines(linePen, currentLine.ToArray());
+            }
+        }
+
+        private void CheckDeleteLine(Point clickPoint)
+        {
+            for (int i = 0; i < allLines.Count; i++)
+            {
+                if (allLines[i].Count > 1 && LineContainsPoint(allLines[i], clickPoint))
+                {
+                    // Show a context menu to delete the line
+                    ShowDeleteLineContextMenu(clickPoint, i);
+                    return;
+                }
+            }
+        }
+
+        private bool LineContainsPoint(List<Point> line, Point point)
+        {
+            for (int i = 1; i < line.Count; i++)
+            {
+                Point p1 = line[i - 1];
+                Point p2 = line[i];
+                if (DistanceFromPointToLine(point, p1, p2) < 5) // You can adjust the threshold for proximity
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private double DistanceFromPointToLine(Point point, Point lineStart, Point lineEnd)
+        {
+            double A = point.X - lineStart.X;
+            double B = point.Y - lineStart.Y;
+            double C = lineEnd.X - lineStart.X;
+            double D = lineEnd.Y - lineStart.Y;
+
+            double dot = A * C + B * D;
+            double len_sq = C * C + D * D;
+            double param = dot / len_sq;
+
+            double xx, yy;
+
+            if (param < 0)
+            {
+                xx = lineStart.X;
+                yy = lineStart.Y;
+            }
+            else if (param > 1)
+            {
+                xx = lineEnd.X;
+                yy = lineEnd.Y;
+            }
+            else
+            {
+                xx = lineStart.X + param * C;
+                yy = lineStart.Y + param * D;
+            }
+
+            double dx = point.X - xx;
+            double dy = point.Y - yy;
+
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+
+        private void ShowDeleteLineContextMenu(Point location, int lineIndex)
+        {
+            ContextMenu deleteMenu = new ContextMenu();
+            MenuItem deleteItem = new MenuItem("Delete Line");
+            deleteItem.Click += (sender, e) => DeleteLine(lineIndex);
+            deleteMenu.MenuItems.Add(deleteItem);
+
+            Point clientLocation = PointToClient(location); // Convert to client coordinates
+            clientLocation.Y += 180; // Adjust the Y-coordinate to move the menu lower
+            deleteMenu.Show(this, clientLocation);
+        }
+
+        private void DeleteLine(int lineIndex)
+        {
+            // Remove the selected line and its color from the lists
+            allLines.RemoveAt(lineIndex);
+            lineColors.RemoveAt(lineIndex);
+
+            // Redraw the form
+            Invalidate();
+        }
 
     }
 
