@@ -37,6 +37,10 @@ namespace WindowsFormsControlLibrary1
         private List<Point> currentLine = new List<Point>();
         private Pen linePen = new Pen(Color.Black, 3);
         private List<Color> lineColors = new List<Color>();
+        int yvalue = 0;
+        private DraggableLabel[] podrjesenja_labele;
+        private int[] podrjesenja_izlazi;
+        int broj_vrata = 0;
 
 
         public UserControl1()
@@ -189,6 +193,7 @@ namespace WindowsFormsControlLibrary1
                 nor[i] = new DraggableLabel();
                 nor[i].Visible = false;
                 nor[i].Location = new Point(350, 150);
+                nor[i].Tag = "nor" + i;
 
                 try
                 {
@@ -215,6 +220,7 @@ namespace WindowsFormsControlLibrary1
                 nand[i] = new DraggableLabel();
                 nand[i].Visible = false;
                 nand[i].Location = new Point(350, 150);
+                nand[i].Tag = "nand" + i;
 
                 try
                 {
@@ -300,14 +306,12 @@ namespace WindowsFormsControlLibrary1
             linePen.Color = selectedColor;
         }
 
-
         private void LabelMouseDown(object sender, MouseEventArgs e)
         {
             Label selectedLabel = (Label)sender;
             offset = e.Location;
             selectedLabel.BringToFront();
         }
-
 
         private void LabelMouseMove(object sender, MouseEventArgs e)
         {
@@ -400,7 +404,47 @@ namespace WindowsFormsControlLibrary1
                 // Save the color of the current line to the list of line colors.
                 lineColors.Add(linePen.Color);
                 currentLine.Clear();
+
+                broj_vrata++;
             }
+        }
+
+        private bool LineIntersectsRectangle(LineSegment line, Control control)
+        {
+            Rectangle rect = control.Bounds;
+
+            // Check intersection with top side of the rectangle
+            if (LineIntersectsLine(line, new LineSegment(rect.Location, new Point(rect.Right, rect.Top))))
+                return true;
+
+            // Check intersection with right side of the rectangle
+            if (LineIntersectsLine(line, new LineSegment(new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom))))
+                return true;
+
+            // Check intersection with bottom side of the rectangle
+            if (LineIntersectsLine(line, new LineSegment(new Point(rect.Right, rect.Bottom), new Point(rect.Left, rect.Bottom))))
+                return true;
+
+            // Check intersection with left side of the rectangle
+            if (LineIntersectsLine(line, new LineSegment(new Point(rect.Left, rect.Bottom), rect.Location)))
+                return true;
+
+            return false;
+        }
+
+        private bool LineIntersectsLine(LineSegment line1, LineSegment line2)
+        {
+            double denominator = ((line2.End.Y - line2.Start.Y) * (line1.End.X - line1.Start.X)) - ((line2.End.X - line2.Start.X) * (line1.End.Y - line1.Start.Y));
+            double numerator1 = ((line2.End.X - line2.Start.X) * (line1.Start.Y - line2.Start.Y)) - ((line2.End.Y - line2.Start.Y) * (line1.Start.X - line2.Start.X));
+            double numerator2 = ((line1.End.X - line1.Start.X) * (line1.Start.Y - line2.Start.Y)) - ((line1.End.Y - line1.Start.Y) * (line1.Start.X - line2.Start.X));
+
+            // Detect coincident lines
+            if (denominator == 0) return numerator1 == 0 && numerator2 == 0;
+
+            double r = numerator1 / denominator;
+            double s = numerator2 / denominator;
+
+            return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
@@ -423,6 +467,53 @@ namespace WindowsFormsControlLibrary1
                 // Use the current color from linePen
                 e.Graphics.DrawLines(linePen, currentLine.ToArray());
             }
+        }
+
+        private int Value_X(int i)
+        {
+            if (lights[i / 2].BackColor == Color.Green && i % 2 == 0)
+                return 1;
+            else if (lights[i / 2].BackColor == Color.Red && i % 2 == 0)
+                return 0;
+            else if (lights[i / 2].BackColor == Color.Green && i % 2 != 0)
+                return 0;
+            else if (lights[i / 2].BackColor == Color.Red && i % 2 != 0)
+                return 1;
+            return 0;
+        }
+
+        private int CalculateNOT(int result)
+        {
+            if (result == 1)
+                return 0;
+            else
+                return 1;
+        }
+
+        private int CalculateOR(LineSegment line)
+        {
+            for(int i = 0; i < int.Parse(broj_varijabli.Text) * 2; i++)
+            {
+                if(LineIntersectsRectangle(line, botuni_X[i]) == true)
+                {
+                    if (Value_X(i) == 1)
+                        return 1;
+                }
+            }
+            return 0;
+        }
+
+        private int CalculateAND(LineSegment line)
+        {
+            for (int i = 0; i < int.Parse(broj_varijabli.Text) * 2; i++)
+            {
+                if (LineIntersectsRectangle(line, botuni_X[i]) == true)
+                {
+                    if (Value_X(i) == 0)
+                        return 0;
+                }
+            }
+            return 1;
         }
 
         private void CheckDeleteLine(Point clickPoint)
@@ -573,6 +664,18 @@ namespace WindowsFormsControlLibrary1
         }
 
 
+    }
+
+    public class LineSegment
+    {
+        public Point Start { get; set; }
+        public Point End { get; set; }
+
+        public LineSegment(Point start, Point end)
+        {
+            Start = start;
+            End = end;
+        }
     }
 
     public class CircularLabel : Label
