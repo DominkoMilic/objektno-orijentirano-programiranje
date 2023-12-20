@@ -37,11 +37,8 @@ namespace WindowsFormsControlLibrary1
         private List<Point> currentLine = new List<Point>();
         private Pen linePen = new Pen(Color.Black, 3);
         private List<Color> lineColors = new List<Color>();
-        int yvalue = 0;
-        private DraggableLabel[] podrjesenja_labele;
-        private int[] podrjesenja_izlazi;
-        int broj_vrata = 0;
-
+        private Point endPoint = Point.Empty;
+        private Point startPoint = Point.Empty;
 
         public UserControl1()
         {
@@ -398,6 +395,7 @@ namespace WindowsFormsControlLibrary1
             else if (isDrawing && e.Button == MouseButtons.Left)
             {
                 currentLine.Add(e.Location);
+                startPoint = e.Location;//spremanje pocetne lokacije linije
             }
         }
 
@@ -407,6 +405,7 @@ namespace WindowsFormsControlLibrary1
             // Continue drawing while the left mouse button is held down.
             if (isDrawing && e.Button == MouseButtons.Left)
             {
+                endPoint = e.Location;//spremanje krajnje lokacije linije
                 currentLine.Add(e.Location);
                 this.Invalidate(); // Force the form to redraw.
             }
@@ -423,11 +422,55 @@ namespace WindowsFormsControlLibrary1
                 // Save the color of the current line to the list of line colors.
                 lineColors.Add(linePen.Color);
                 currentLine.Clear();
-
-                broj_vrata++;
+                //MessageBox.Show("end point kabela X:" + endPoint.X + "Y: " + endPoint.Y + "\nstart point kabela X: " + startPoint.X + "Y: " + startPoint.Y);
+                IntersectionWithButton();
+                IntersectionWithDraggableLabelNOR();
+                IntersectionWithDraggableLabelNAND();
             }
         }
-            
+
+        //provjera zavrsava li linija unutar nor labele
+        private void IntersectionWithDraggableLabelNOR()
+        {
+            for (int i = 0; i < broj_botuna; i++)
+            {
+                if (endPoint.X > nor[i].Bounds.Right - nor[i].Width  && endPoint.X < nor[i].Bounds.Right && endPoint.Y > nor[i].Bounds.Top && endPoint.Y < nor[i].Bounds.Top + nor[i].Height && nor[i].Visible == true)
+                {
+                    MessageBox.Show("upada ko pretres na nor");
+                    //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
+                }
+            }
+        }
+
+        //provjera zavrsava li linija unutar nand labele
+        private void IntersectionWithDraggableLabelNAND()
+        {
+            for (int i = 0; i < broj_botuna; i++)
+            {
+                if (endPoint.X > nand[i].Bounds.Right - nand[i].Width && endPoint.X < nand[i].Bounds.Right && endPoint.Y > nand[i].Bounds.Top && endPoint.Y < nand[i].Bounds.Top + nand[i].Height && nand[i].Visible == true)
+                {
+                    MessageBox.Show("upada ko pretres na nand");
+                    //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
+                }
+                //else
+                    //dodat brisanje kabela ako nije spojen dobro
+
+            }
+        }
+
+        //provjera je li linija unutar botuna i minjanje boja
+        private void IntersectionWithButton()
+        {
+            for(int i = 0; i < broj_botuna; i++)
+            {
+                if(startPoint.X > 50 && startPoint.X < 90 && startPoint.Y > botuni_X[i].Bounds.Top && startPoint.Y < botuni_X[i].Bounds.Top + 30 && botuni_X[i].Visible == true)
+                {
+                    MessageBox.Show("upada ko pretres");
+                    //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
+                }
+            }
+        }
+
         //omogucava crtanje linija
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
@@ -538,9 +581,7 @@ namespace WindowsFormsControlLibrary1
             deleteItem.Click += (sender, e) => DeleteLine(lineIndex);
             deleteMenu.MenuItems.Add(deleteItem);
 
-            Point clientLocation = PointToClient(location); // Convert to client coordinates
-            clientLocation.Y += 180;
-            deleteMenu.Show(this, clientLocation);
+            deleteMenu.Show(this, location);
         }
 
         //brisanje linije iz forme
@@ -641,5 +682,6 @@ namespace WindowsFormsControlLibrary1
             base.OnPaint(e);
         }
     }
+    
 
 }
