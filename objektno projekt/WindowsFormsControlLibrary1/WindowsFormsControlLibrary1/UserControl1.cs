@@ -83,6 +83,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //stvaranje okruglih labela koje su zelene za vrijednost 1 i crvene za vrijednost 0
         private void labela_svijetlo(int number_of_lights)
         {
             lights = new CircularLabel[number_of_lights];
@@ -98,6 +99,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //stvaranje botuna X !X za varijable X
         private void inicijalizacija_botuna_X()
         {
             botuni_X = new Button[broj_botuna];
@@ -126,6 +128,7 @@ namespace WindowsFormsControlLibrary1
             botuni_X[1].Visible = true;
         }
 
+        //stvaranje botuna za davanje vrijednosti varijablama X
         private void inicijalizacija_botuna_ON()
         {
             botuni_ON = new Button[5];
@@ -142,6 +145,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //stvaranje botuna za boju kabela
         private void inicijalizacija_botuna_boja()
         {
             botuni_boja = new Button[5];
@@ -158,6 +162,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //postavljanje labela X0 - X4
         private void inicijalizacija_labela()
         {
             labele = new Label[broj_labela];
@@ -177,13 +182,13 @@ namespace WindowsFormsControlLibrary1
             labele[0].Visible = true;
         }
 
+        //provjera pozicije labele
         private void CheckLabelLocation(Label selectedLabel)
         {
-            // Check the location of the draggable label
             MessageBox.Show($"Label Location: {selectedLabel.Location}");
-            // You can perform additional logic based on the label's location
         }
 
+        //stvaranje nor labela
         private void postavljanje_NOR()
         {
             nor = new DraggableLabel[broj_NOR];
@@ -211,6 +216,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //stvaranje nand labela
         private void postavljanje_NAND()
         {
             nand = new DraggableLabel[broj_NAND];
@@ -238,6 +244,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //paljenje(!) i gasenje(0) vrijednosti za pojedini X
         private void botuni_ON_click(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
@@ -258,6 +265,7 @@ namespace WindowsFormsControlLibrary1
             cp_counter = Convert.ToInt32(binary, 2);
         }
 
+        //dodavanje varijabli X !X
         private void inkrement_Click(object sender, EventArgs e)
         {
             if (trenutni_br < 5)
@@ -271,6 +279,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //uklanjanje varijabli X !X
         private void dekrement_Click(object sender, EventArgs e)
         {
             if (trenutni_br > 1)
@@ -284,6 +293,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //dodaavanje nili vrata
         private void inkrement_nili_Click(object sender, EventArgs e)
         {
             if (trenutni_br_nili < 100)
@@ -292,6 +302,7 @@ namespace WindowsFormsControlLibrary1
 
         }
 
+        //dodavanje ni vrata
         private void inkrement_ni_Click(object sender, EventArgs e)
         {
             if (trenutni_br_ni < 100)
@@ -299,6 +310,7 @@ namespace WindowsFormsControlLibrary1
             nand[trenutni_br_ni - 1].Visible = true;
         }
 
+        //minjanje boje kabela
         private void BotuniBoja_Click(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
@@ -306,13 +318,13 @@ namespace WindowsFormsControlLibrary1
             linePen.Color = selectedColor;
         }
 
+        //drag and drop za labele nor i nand
         private void LabelMouseDown(object sender, MouseEventArgs e)
         {
             Label selectedLabel = (Label)sender;
             offset = e.Location;
             selectedLabel.BringToFront();
         }
-
         private void LabelMouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -327,14 +339,16 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
-        private void reset_lights_Click(object sender, EventArgs e)
+        //postavljanje labela svijetlo na 0 (crveno)
+        private void Reset_lights_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < number_of_lights; i++)
                 lights[i].BackColor = Color.Red;
             cp_counter = 0;
         }
 
-        private void counting_point_Click(object sender, EventArgs e)
+        //vrtnja svih mogucih kombinacija svijetala (binarno od 0 do 32)
+        private void Counting_point_Click(object sender, EventArgs e)
         {
             cp_counter++;
             string binaryi = Convert.ToString(cp_counter, 2);
@@ -350,13 +364,15 @@ namespace WindowsFormsControlLibrary1
                 cp_counter = 0;
         }
 
-        private void add_cabel_Click(object sender, EventArgs e)
+        //omogucava crtanje kabela
+        private void Add_cabel_Click(object sender, EventArgs e)
         {
             isDrawing = true;
             currentLine.Clear();
             linePen.Color = GetNextLineColor();
         }
 
+        //zadrzavanje boje vec nacrtanih kabela
         private Color GetNextLineColor()
         {
             // If there are existing lines, return the color of the last line
@@ -371,6 +387,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //omogucava brisanje linije na desni klik
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -384,6 +401,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //crtanje linije dok je lijevi klik misa pritisnut
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             // Continue drawing while the left mouse button is held down.
@@ -394,6 +412,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //spremanje linije u listu nakon pustanja lijevog klika
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
             if (isDrawing && e.Button == MouseButtons.Left)
@@ -408,45 +427,8 @@ namespace WindowsFormsControlLibrary1
                 broj_vrata++;
             }
         }
-
-        private bool LineIntersectsRectangle(LineSegment line, Control control)
-        {
-            Rectangle rect = control.Bounds;
-
-            // Check intersection with top side of the rectangle
-            if (LineIntersectsLine(line, new LineSegment(rect.Location, new Point(rect.Right, rect.Top))))
-                return true;
-
-            // Check intersection with right side of the rectangle
-            if (LineIntersectsLine(line, new LineSegment(new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom))))
-                return true;
-
-            // Check intersection with bottom side of the rectangle
-            if (LineIntersectsLine(line, new LineSegment(new Point(rect.Right, rect.Bottom), new Point(rect.Left, rect.Bottom))))
-                return true;
-
-            // Check intersection with left side of the rectangle
-            if (LineIntersectsLine(line, new LineSegment(new Point(rect.Left, rect.Bottom), rect.Location)))
-                return true;
-
-            return false;
-        }
-
-        private bool LineIntersectsLine(LineSegment line1, LineSegment line2)
-        {
-            double denominator = ((line2.End.Y - line2.Start.Y) * (line1.End.X - line1.Start.X)) - ((line2.End.X - line2.Start.X) * (line1.End.Y - line1.Start.Y));
-            double numerator1 = ((line2.End.X - line2.Start.X) * (line1.Start.Y - line2.Start.Y)) - ((line2.End.Y - line2.Start.Y) * (line1.Start.X - line2.Start.X));
-            double numerator2 = ((line1.End.X - line1.Start.X) * (line1.Start.Y - line2.Start.Y)) - ((line1.End.Y - line1.Start.Y) * (line1.Start.X - line2.Start.X));
-
-            // Detect coincident lines
-            if (denominator == 0) return numerator1 == 0 && numerator2 == 0;
-
-            double r = numerator1 / denominator;
-            double s = numerator2 / denominator;
-
-            return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
-        }
-
+            
+        //omogucava crtanje linija
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             for (int i = 0; i < allLines.Count; i++)
@@ -469,6 +451,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //racunanje pojedinih vrijenosti X i !X
         private int Value_X(int i)
         {
             if (lights[i / 2].BackColor == Color.Green && i % 2 == 0)
@@ -482,40 +465,7 @@ namespace WindowsFormsControlLibrary1
             return 0;
         }
 
-        private int CalculateNOT(int result)
-        {
-            if (result == 1)
-                return 0;
-            else
-                return 1;
-        }
-
-        private int CalculateOR(LineSegment line)
-        {
-            for(int i = 0; i < int.Parse(broj_varijabli.Text) * 2; i++)
-            {
-                if(LineIntersectsRectangle(line, botuni_X[i]) == true)
-                {
-                    if (Value_X(i) == 1)
-                        return 1;
-                }
-            }
-            return 0;
-        }
-
-        private int CalculateAND(LineSegment line)
-        {
-            for (int i = 0; i < int.Parse(broj_varijabli.Text) * 2; i++)
-            {
-                if (LineIntersectsRectangle(line, botuni_X[i]) == true)
-                {
-                    if (Value_X(i) == 0)
-                        return 0;
-                }
-            }
-            return 1;
-        }
-
+        //otvara opciju izbrzi ako je desni klik misa pritisnut na liniji
         private void CheckDeleteLine(Point clickPoint)
         {
             for (int i = 0; i < allLines.Count; i++)
@@ -529,6 +479,7 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
+        //gleda sadrzi li linija lokaciju desnog klika misa 
         private bool LineContainsPoint(List<Point> line, Point point)
         {
             for (int i = 1; i < line.Count; i++)
@@ -543,6 +494,7 @@ namespace WindowsFormsControlLibrary1
             return false;
         }
 
+        //racunanje udaljenosti izmedu linije i desnog klika misa
         private double DistanceFromPointToLine(Point point, Point lineStart, Point lineEnd)
         {
             double A = point.X - lineStart.X;
@@ -578,6 +530,7 @@ namespace WindowsFormsControlLibrary1
             return Math.Sqrt(dx * dx + dy * dy);
         }
 
+        //stvaranje delete opcije za liniju
         private void ShowDeleteLineContextMenu(Point location, int lineIndex)
         {
             ContextMenu deleteMenu = new ContextMenu();
@@ -586,10 +539,11 @@ namespace WindowsFormsControlLibrary1
             deleteMenu.MenuItems.Add(deleteItem);
 
             Point clientLocation = PointToClient(location); // Convert to client coordinates
-            clientLocation.Y += 180; // Adjust the Y-coordinate to move the menu lower
+            clientLocation.Y += 180;
             deleteMenu.Show(this, clientLocation);
         }
 
+        //brisanje linije iz forme
         private void DeleteLine(int lineIndex)
         {
             // Remove the selected line and its color from the lists
@@ -662,20 +616,7 @@ namespace WindowsFormsControlLibrary1
                 Location = new Point(newX, newY);
             }
         }
-
-
-    }
-
-    public class LineSegment
-    {
-        public Point Start { get; set; }
-        public Point End { get; set; }
-
-        public LineSegment(Point start, Point end)
-        {
-            Start = start;
-            End = end;
-        }
+        
     }
 
     public class CircularLabel : Label
@@ -684,7 +625,7 @@ namespace WindowsFormsControlLibrary1
         {
             this.AutoSize = false;
             this.Size = new Size(10, 10);
-            this.BackColor = Color.Blue;
+            this.BackColor = Color.Red;
             SetCircularRegion();
         }
 

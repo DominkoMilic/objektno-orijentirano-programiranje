@@ -235,7 +235,7 @@
             this.reset_lights.TabIndex = 39;
             this.reset_lights.Text = "R";
             this.reset_lights.UseVisualStyleBackColor = true;
-            this.reset_lights.Click += new System.EventHandler(this.reset_lights_Click);
+            this.reset_lights.Click += new System.EventHandler(this.Reset_lights_Click);
             // 
             // counting_point
             // 
@@ -246,7 +246,7 @@
             this.counting_point.TabIndex = 40;
             this.counting_point.Text = "CP";
             this.counting_point.UseVisualStyleBackColor = true;
-            this.counting_point.Click += new System.EventHandler(this.counting_point_Click);
+            this.counting_point.Click += new System.EventHandler(this.Counting_point_Click);
             // 
             // add_cabel
             // 
@@ -256,7 +256,7 @@
             this.add_cabel.TabIndex = 41;
             this.add_cabel.Text = "DODAJ KABEL";
             this.add_cabel.UseVisualStyleBackColor = true;
-            this.add_cabel.Click += new System.EventHandler(this.add_cabel_Click);
+            this.add_cabel.Click += new System.EventHandler(this.Add_cabel_Click);
             // 
             // izlaz_svijetlo
             // 
