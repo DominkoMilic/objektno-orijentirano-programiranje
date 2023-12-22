@@ -421,54 +421,58 @@ namespace WindowsFormsControlLibrary1
                 allLines.Add(new List<Point>(currentLine));
                 // Save the color of the current line to the list of line colors.
                 lineColors.Add(linePen.Color);
+                if (((EndIntersectionWithDraggableLabel(nor) == true || EndIntersectionWithDraggableLabel(nand) == true) && IntersectionWithButton() == true) || ((EndIntersectionWithDraggableLabel(nand) == true || EndIntersectionWithDraggableLabel(nor) == true) && (StartIntersectionWithDraggableLabel(nand) == true || StartIntersectionWithDraggableLabel(nor) == true)))
+                    ;
+                else
+                {
+                    int deleteIndex = allLines.FindIndex(line => line.SequenceEqual(currentLine));
+                    DeleteLine(deleteIndex);
+                }
                 currentLine.Clear();
-                //MessageBox.Show("end point kabela X:" + endPoint.X + "Y: " + endPoint.Y + "\nstart point kabela X: " + startPoint.X + "Y: " + startPoint.Y);
-                IntersectionWithButton();
-                IntersectionWithDraggableLabelNOR();
-                IntersectionWithDraggableLabelNAND();
             }
         }
 
-        //provjera zavrsava li linija unutar nor labele
-        private void IntersectionWithDraggableLabelNOR()
+        //provjera zavrsava li linija unutar neke od labele
+        private bool EndIntersectionWithDraggableLabel(DraggableLabel[] vrata)
         {
             for (int i = 0; i < broj_botuna; i++)
             {
-                if (endPoint.X > nor[i].Bounds.Right - nor[i].Width  && endPoint.X < nor[i].Bounds.Right && endPoint.Y > nor[i].Bounds.Top && endPoint.Y < nor[i].Bounds.Top + nor[i].Height && nor[i].Visible == true)
+                if (endPoint.X > vrata[i].Bounds.Left - 10 && endPoint.X < vrata[i].Bounds.Right + 10 && endPoint.Y > vrata[i].Bounds.Top - 10 && endPoint.Y < vrata[i].Bounds.Bottom + 10 && vrata[i].Visible == true)
                 {
-                    MessageBox.Show("upada ko pretres na nor");
+                    MessageBox.Show("zavrsava u labeli");
                     //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
+                    return true;
                 }
             }
+            return false;
         }
 
-        //provjera zavrsava li linija unutar nand labele
-        private void IntersectionWithDraggableLabelNAND()
+        private bool StartIntersectionWithDraggableLabel(DraggableLabel[] vrata)
         {
             for (int i = 0; i < broj_botuna; i++)
             {
-                if (endPoint.X > nand[i].Bounds.Right - nand[i].Width && endPoint.X < nand[i].Bounds.Right && endPoint.Y > nand[i].Bounds.Top && endPoint.Y < nand[i].Bounds.Top + nand[i].Height && nand[i].Visible == true)
+                if (startPoint.X > vrata[i].Bounds.Left - 10 && startPoint.X < vrata[i].Bounds.Right + 10 && startPoint.Y > vrata[i].Bounds.Top - 10 && startPoint.Y < vrata[i].Bounds.Bottom + 10 && vrata[i].Visible == true)
                 {
-                    MessageBox.Show("upada ko pretres na nand");
+                    MessageBox.Show("pocinje u labeli");
                     //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
+                    return true;
                 }
-                //else
-                    //dodat brisanje kabela ako nije spojen dobro
-
             }
+            return false;
         }
 
         //provjera je li linija unutar botuna i minjanje boja
-        private void IntersectionWithButton()
+        private bool IntersectionWithButton()
         {
             for(int i = 0; i < broj_botuna; i++)
             {
                 if(startPoint.X > 50 && startPoint.X < 90 && startPoint.Y > botuni_X[i].Bounds.Top && startPoint.Y < botuni_X[i].Bounds.Top + 30 && botuni_X[i].Visible == true)
                 {
-                    MessageBox.Show("upada ko pretres");
                     //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
+                    return true;
                 }
             }
+            return false;
         }
 
         //omogucava crtanje linija
