@@ -39,6 +39,7 @@ namespace WindowsFormsControlLibrary1
         private List<Color> lineColors = new List<Color>();
         private Point endPoint = Point.Empty;
         private Point startPoint = Point.Empty;
+        private List<int> indexi = new List<int>();
 
         public UserControl1()
         {
@@ -55,7 +56,8 @@ namespace WindowsFormsControlLibrary1
         }
 
         private void UserControl1_Load(object sender, EventArgs e)
-        { 
+        {
+            inkrement_ni.Enabled = false;
             broj_varijabli.Text = trenutni_br.ToString();
             inicijalizacija_labela();
             inicijalizacija_botuna_X();
@@ -421,8 +423,10 @@ namespace WindowsFormsControlLibrary1
                 allLines.Add(new List<Point>(currentLine));
                 // Save the color of the current line to the list of line colors.
                 lineColors.Add(linePen.Color);
-                if (((EndIntersectionWithDraggableLabel(nor) == true || EndIntersectionWithDraggableLabel(nand) == true) && IntersectionWithButton() == true) || ((EndIntersectionWithDraggableLabel(nand) == true || EndIntersectionWithDraggableLabel(nor) == true) && (StartIntersectionWithDraggableLabel(nand) == true || StartIntersectionWithDraggableLabel(nor) == true)))
-                    ;
+                if (((EndIntersectionWithDraggableLabel(nor) == true || EndIntersectionWithDraggableLabel(nand) == true) && IntersectionWithButton() == true) || ((EndIntersectionWithDraggableLabel(nand) == true || EndIntersectionWithDraggableLabel(nor) == true) && (StartIntersectionWithDraggableLabel(nand) == true || StartIntersectionWithDraggableLabel(nor) == true)) || ((StartIntersectionWithDraggableLabel(nor) == true || StartIntersectionWithDraggableLabel(nand) == true) && EndIntersectionWithY(izlaz)))
+                {
+
+                }
                 else
                 {
                     int deleteIndex = allLines.FindIndex(line => line.SequenceEqual(currentLine));
@@ -431,29 +435,45 @@ namespace WindowsFormsControlLibrary1
                 currentLine.Clear();
             }
         }
-
-        //provjera zavrsava li linija unutar neke od labele
-        private bool EndIntersectionWithDraggableLabel(DraggableLabel[] vrata)
+        
+        //provjera zavrsava li linija unutar izlazne labele
+        private bool EndIntersectionWithY(Label izlaz)
         {
             for (int i = 0; i < broj_botuna; i++)
             {
-                if (endPoint.X > vrata[i].Bounds.Left - 10 && endPoint.X < vrata[i].Bounds.Right + 10 && endPoint.Y > vrata[i].Bounds.Top - 10 && endPoint.Y < vrata[i].Bounds.Bottom + 10 && vrata[i].Visible == true)
+                if (endPoint.X > izlaz.Bounds.Left - 10 && endPoint.X < izlaz.Bounds.Right + 10 && endPoint.Y > izlaz.Bounds.Top - 10 && endPoint.Y < izlaz.Bounds.Bottom + 10 && izlaz.Visible == true)
                 {
-                    MessageBox.Show("zavrsava u labeli");
-                    //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
+                    izlaz_svijetlo.BackColor = Color.Green;
                     return true;
                 }
             }
             return false;
         }
 
+        //provjera zavrsava li linija unutar neke od labele
+        private bool EndIntersectionWithDraggableLabel(DraggableLabel[] vrata)
+        {
+            int br = 0;
+            for (int i = 0; i < broj_botuna; i++)
+            {
+                if (endPoint.X > vrata[i].Bounds.Left - 10 && endPoint.X < vrata[i].Bounds.Right + 10 && endPoint.Y > vrata[i].Bounds.Top - 10 && endPoint.Y < vrata[i].Bounds.Bottom + 10 && vrata[i].Visible == true)
+                {
+                    br++;
+                }
+            }
+            if (br > 0)
+                return true;
+            return false;
+        }
+
+        //provjera pocinje li linija unutar neke labele
         private bool StartIntersectionWithDraggableLabel(DraggableLabel[] vrata)
         {
             for (int i = 0; i < broj_botuna; i++)
             {
                 if (startPoint.X > vrata[i].Bounds.Left - 10 && startPoint.X < vrata[i].Bounds.Right + 10 && startPoint.Y > vrata[i].Bounds.Top - 10 && startPoint.Y < vrata[i].Bounds.Bottom + 10 && vrata[i].Visible == true)
                 {
-                    MessageBox.Show("pocinje u labeli");
+
                     //triba dodat da linija minja boju ako je 1 ili da pamti vrijednost
                     return true;
                 }
@@ -599,12 +619,53 @@ namespace WindowsFormsControlLibrary1
             Invalidate();
         }
 
+        //postavljanje na ni vrstu
+        private void nIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            inkrement_ni.Enabled = true;
+            inkrement_nili.Enabled = false;
+            if(trenutni_br_nili > 0)
+            {
+                for (int i = 0; i < trenutni_br_nili; i++)
+                    nor[i].Parent.Controls.Remove(nor[i]);
+            }
+            trenutni_br_nili = 0;
+            allLines.Clear();
+            this.Invalidate();
+        }
+
+        //postavljanje na nili vrstu
+        private void nILIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            inkrement_nili.Enabled = true;
+            inkrement_ni.Enabled = false;
+            if(trenutni_br_ni > 0)
+            {
+                for (int i = 0; i < trenutni_br_ni; i++)
+                    nand[i].Parent.Controls.Remove(nand[i]);
+            }
+            trenutni_br_ni = 0;
+            allLines.Clear();
+            this.Invalidate();
+        }
+
+        private void nOVOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        //resetiranje forme
+        private void ResetForm(object sender, EventArgs e)
+        {
+            
+        }
     }
 
     public class DraggableLabel : Label
     {
         private Point offset;
         private ContextMenuStrip contextMenu;
+        public int izlazna_vrijednost;
 
         public DraggableLabel()
         {
@@ -686,6 +747,5 @@ namespace WindowsFormsControlLibrary1
             base.OnPaint(e);
         }
     }
-    
 
 }

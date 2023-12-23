@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.broj_varijabli = new System.Windows.Forms.Label();
             this.dekrement = new System.Windows.Forms.Button();
             this.inkrement = new System.Windows.Forms.Button();
@@ -47,8 +48,15 @@
             this.reset_lights = new System.Windows.Forms.Button();
             this.counting_point = new System.Windows.Forms.Button();
             this.add_cabel = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.POSTAVKEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nOVOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nILIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.izlaz_svijetlo = new WindowsFormsControlLibrary1.CircularLabel();
             this.circularLabel1 = new WindowsFormsControlLibrary1.CircularLabel();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // broj_varijabli
@@ -258,6 +266,57 @@
             this.add_cabel.UseVisualStyleBackColor = true;
             this.add_cabel.Click += new System.EventHandler(this.Add_cabel_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.AutoSize = false;
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.POSTAVKEToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(700, 20);
+            this.menuStrip1.TabIndex = 42;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // POSTAVKEToolStripMenuItem
+            // 
+            this.POSTAVKEToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.POSTAVKEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nOVOToolStripMenuItem,
+            this.nILIToolStripMenuItem,
+            this.nIToolStripMenuItem});
+            this.POSTAVKEToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.POSTAVKEToolStripMenuItem.Name = "POSTAVKEToolStripMenuItem";
+            this.POSTAVKEToolStripMenuItem.Size = new System.Drawing.Size(77, 16);
+            this.POSTAVKEToolStripMenuItem.Text = "POSTAVKE";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // nOVOToolStripMenuItem
+            // 
+            this.nOVOToolStripMenuItem.Name = "nOVOToolStripMenuItem";
+            this.nOVOToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nOVOToolStripMenuItem.Text = "NOVO";
+            this.nOVOToolStripMenuItem.Click += new System.EventHandler(this.nOVOToolStripMenuItem_Click);
+            // 
+            // nILIToolStripMenuItem
+            // 
+            this.nILIToolStripMenuItem.Name = "nILIToolStripMenuItem";
+            this.nILIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nILIToolStripMenuItem.Text = "NILI";
+            this.nILIToolStripMenuItem.Click += new System.EventHandler(this.nILIToolStripMenuItem_Click);
+            // 
+            // nIToolStripMenuItem
+            // 
+            this.nIToolStripMenuItem.Name = "nIToolStripMenuItem";
+            this.nIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nIToolStripMenuItem.Text = "NI";
+            this.nIToolStripMenuItem.Click += new System.EventHandler(this.nIToolStripMenuItem_Click);
+            // 
             // izlaz_svijetlo
             // 
             this.izlaz_svijetlo.AutoSize = true;
@@ -303,9 +362,12 @@
             this.Controls.Add(this.dekrement);
             this.Controls.Add(this.broj_varijabli);
             this.Controls.Add(this.izbornik);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "UserControl1";
             this.Size = new System.Drawing.Size(700, 450);
             this.Load += new System.EventHandler(this.UserControl1_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,5 +395,11 @@
         private System.Windows.Forms.Button reset_lights;
         private System.Windows.Forms.Button counting_point;
         private System.Windows.Forms.Button add_cabel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem POSTAVKEToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem nOVOToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nILIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nIToolStripMenuItem;
     }
 }
